@@ -4,18 +4,28 @@
 package github.mstchristian.goatcore;
 
 import github.mstchristian.goatcore.commands.GoatCoreCommand;
+import github.mstchristian.goatcore.commands.ServerInfoCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class GoatCore extends JavaPlugin {
+    private long startTime;
+
     @Override
     public void onEnable() {
         getCommand("goatcore").setExecutor(new GoatCoreCommand(this));
+        getCommand("serverinfo").setExecutor(new ServerInfoCommand(this));
 
         System.out.println("GoatCore has been enabled!");
+
+        this.startTime = System.currentTimeMillis();
     }
 
     @Override
     public void onDisable() {
         System.out.println("GoatCore has been disabled!");
+    }
+
+    public long getStartTime() {
+        return startTime;
     }
 }

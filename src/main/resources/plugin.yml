@@ -5,7 +5,7 @@ version: '1.0-SNAPSHOT'
 main: github.mstchristian.goatcore.GoatCore
 api-version: '1.21'
 prefix: GoatCore
-authors: [mst.christian_]
+authors: [ mst.christian_ ]
 description: GoatCore is a sleek, modular framework for high-performance Spigot minigame servers.
 website: https://github.com/mstchristian/GoatCore
 commands:
@@ -14,7 +14,15 @@ commands:
     usage: /<command>
     permission: goatcore.command
     permission-message: You do not have permission to use this command.
+  serverinfo:
+    description: Displays the server information.
+    usage: /<command>
+    permission: goatcore.serverinfo
+    permission-message: You do not have permission to use this command.
 permissions:
   goatcore.command:
     description: Allows the use of the /goatcore command.
+    default: op
+  goatcore.serverinfo:
+    description: Allows the use of the /serverinfo command.
     default: op
