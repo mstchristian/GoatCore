@@ -23,6 +23,8 @@ public class ServerInfoCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender.hasPermission("goatcore.serverinfo")) {
+            String serverName = this.plugin.getConfig().getString("serverName");
+
             long uptimeSeconds = (System.currentTimeMillis() - plugin.getStartTime()) / 1000;
             long days = uptimeSeconds / 86400;
             uptimeSeconds %= 86400;
@@ -33,7 +35,12 @@ public class ServerInfoCommand implements CommandExecutor {
 
             sender.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Server Information");
             sender.sendMessage(ChatColor.GRAY + "________________");
-            sender.sendMessage(ChatColor.AQUA + "Server Name: " + ChatColor.WHITE + this.plugin.getServer().getName());
+
+            if (serverName != null & !serverName.isEmpty()) {
+                sender.sendMessage(ChatColor.AQUA + "Server Name: " + ChatColor.WHITE + serverName);
+            }
+
+            sender.sendMessage(ChatColor.AQUA + "Server True Name: " + ChatColor.WHITE + this.plugin.getServer().getName());
             sender.sendMessage(ChatColor.AQUA + "Server Version: " + ChatColor.WHITE + this.plugin.getServer().getVersion());
             sender.sendMessage(ChatColor.AQUA + "Bukkit Version: " + ChatColor.WHITE + this.plugin.getServer().getBukkitVersion());
             sender.sendMessage(ChatColor.AQUA + "Java Version: " + ChatColor.WHITE + System.getProperty("java.version"));
