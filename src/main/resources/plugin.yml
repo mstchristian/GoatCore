@@ -1,0 +1,10 @@
+#Copyright (c) 2025 mst.christian_
+#Licensed under the MIT License. See LICENSE file in the project root for full license information.
+name: GoatCore
+version: '1.0-SNAPSHOT'
+main: github.mstchristian.goatcore.GoatCore
+api-version: '1.21'
+prefix: GoatCore
+authors: [mst.christian_]
+description: GoatCore is a sleek, modular framework for high-performance Spigot minigame servers.
+website: https://github.com/mstchristian/GoatCore
