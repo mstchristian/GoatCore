@@ -18,21 +18,23 @@ public class PlayerQuitListener implements Listener {
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
-        String serverName = this.plugin.getConfig().getString("serverName");
-        if (serverName == null || serverName.isEmpty()) {
-            serverName = "Unknown Server";
+        String serverName = this.plugin.getConfig().getString("serverName", "Unknown Server");
+
+        if (!plugin.getConfig().getBoolean("sendQuitMessage")) {
+            event.setQuitMessage(null);
+            return;
         }
 
-        if (this.plugin.getConfig().getBoolean("sendQuitMessage")) {
-            String message = this.plugin.getConfig().getString("quitMessage");
-            if (message != null && !message.isEmpty()) {
-                message = message
-                        .replace("%player%", event.getPlayer().getDisplayName())
-                        .replace("%servername%", serverName);
-                event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', message));
-            }
-        } else {
+        String rawMessage = this.plugin.getConfig().getString("quitMessage");
+        if (rawMessage == null || rawMessage.isEmpty()) {
             event.setQuitMessage(null);
+            return;
         }
+
+        String finalMessage = rawMessage
+                .replace("%player%", event.getPlayer().getDisplayName())
+                .replace("%servername%", serverName);
+
+        event.setQuitMessage(ChatColor.translateAlternateColorCodes('&', finalMessage));
     }
 }

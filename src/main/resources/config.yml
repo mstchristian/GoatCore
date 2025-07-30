@@ -5,3 +5,5 @@ sendJoinMessage: true
 joinMessage: "&e&l%player% &r&ahas joined &b%servername%&a!"
 sendQuitMessage: true
 quitMessage: "&e&l%player% &r&ahas left &b%servername%&a!"
+lobby:
+  teleportOnJoin: true

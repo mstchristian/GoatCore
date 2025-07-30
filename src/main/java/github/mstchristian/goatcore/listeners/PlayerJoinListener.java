@@ -5,6 +5,7 @@ package github.mstchristian.goatcore.listeners;
 
 import github.mstchristian.goatcore.GoatCore;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -18,29 +19,39 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        String serverName = this.plugin.getConfig().getString("serverName");
-        if (serverName == null || serverName.isEmpty()) {
-            serverName = "Unknown Server";
+        var config = plugin.getConfig();
+        var player = event.getPlayer();
+        String serverName = config.getString("serverName", "Unknown Server");
+
+        if (config.getBoolean("lobby.teleportOnJoin")) {
+            Location lobbyLocation = config.getLocation("lobby.location");
+            if (lobbyLocation != null) {
+                player.teleport(lobbyLocation);
+            }
         }
 
-        if (this.plugin.getConfig().getBoolean("sendFirstJoinMessage") && !event.getPlayer().hasPlayedBefore()) {
-            String message = this.plugin.getConfig().getString("firstJoinMessage");
-            if (message != null && !message.isEmpty()) {
-                message = message
-                        .replace("%player%", event.getPlayer().getDisplayName())
-                        .replace("%servername%", serverName);
-                event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', message));
+        if (!player.hasPlayedBefore() && config.getBoolean("sendFirstJoinMessage")) {
+            String rawMessage = config.getString("firstJoinMessage");
+            if (rawMessage != null && !rawMessage.isEmpty()) {
+                event.setJoinMessage(formatMessage(rawMessage, player.getDisplayName(), serverName));
+                return;
             }
-        } else if (this.plugin.getConfig().getBoolean("sendJoinMessage")) {
-            String message = this.plugin.getConfig().getString("joinMessage");
-            if (message != null && !message.isEmpty()) {
-                message = message
-                        .replace("%player%", event.getPlayer().getDisplayName())
-                        .replace("%servername%", serverName);
-                event.setJoinMessage(ChatColor.translateAlternateColorCodes('&', message));
-            }
-        } else {
-            event.setJoinMessage(null);
         }
+
+        if (config.getBoolean("sendJoinMessage")) {
+            String rawMessage = config.getString("joinMessage");
+            if (rawMessage != null && !rawMessage.isEmpty()) {
+                event.setJoinMessage(formatMessage(rawMessage, player.getDisplayName(), serverName));
+                return;
+            }
+        }
+
+        event.setJoinMessage(null);
+    }
+
+    private String formatMessage(String raw, String playerName, String serverName) {
+        return ChatColor.translateAlternateColorCodes('&', raw
+                .replace("%player%", playerName)
+                .replace("%servername%", serverName));
     }
 }

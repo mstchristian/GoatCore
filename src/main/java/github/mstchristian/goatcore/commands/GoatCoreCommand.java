@@ -9,6 +9,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
+import java.util.List;
+
 public class GoatCoreCommand implements CommandExecutor {
     private final GoatCore plugin;
 
@@ -16,24 +18,42 @@ public class GoatCoreCommand implements CommandExecutor {
         this.plugin = plugin;
     }
 
+    private static final String LINE_SEPARATOR = ChatColor.GRAY + "________________";
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender.hasPermission("goatcore.command")) {
-            String name = this.plugin.getDescription().getName();
-
-            sender.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + name);
-            sender.sendMessage(ChatColor.GRAY + "________________");
-            sender.sendMessage(ChatColor.AQUA + "Name: " + ChatColor.WHITE + name);
-            sender.sendMessage(ChatColor.AQUA + "Version: " + ChatColor.WHITE + this.plugin.getDescription().getVersion());
-            sender.sendMessage(ChatColor.AQUA + "License: " + ChatColor.WHITE + "MIT");
-            sender.sendMessage(ChatColor.AQUA + "Author: " + ChatColor.WHITE + this.plugin.getDescription().getAuthors().getFirst());
-            sender.sendMessage(ChatColor.AQUA + "Description: " + ChatColor.WHITE + this.plugin.getDescription().getDescription());
-            sender.sendMessage(ChatColor.AQUA + "Website: " + ChatColor.WHITE + this.plugin.getDescription().getWebsite());
-            sender.sendMessage(ChatColor.GRAY + "________________");
-        } else {
-            sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+        if (!sender.hasPermission("goatcore.command")) {
+            sender.sendMessage(ChatColor.RED + "You do not have permission to use this command");
+            return true;
         }
 
+        sendPluginInfo(sender);
         return true;
+    }
+
+    private void sendPluginInfo(CommandSender sender) {
+        var desc = plugin.getDescription();
+        String author = "Unknown";
+        List<String> authors = desc.getAuthors();
+        if (authors != null && !authors.isEmpty()) {
+            author = authors.get(0);
+        }
+
+        String website = desc.getWebsite();
+        if (website == null || website.isEmpty()) {
+            website = "N/A";
+        }
+
+        sender.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + desc.getName());
+        sender.sendMessage(LINE_SEPARATOR);
+
+        sender.sendMessage(ChatColor.AQUA + "Name: " + ChatColor.WHITE + desc.getName());
+        sender.sendMessage(ChatColor.AQUA + "Version: " + ChatColor.WHITE + desc.getVersion());
+        sender.sendMessage(ChatColor.AQUA + "License: " + ChatColor.WHITE + "MIT");
+        sender.sendMessage(ChatColor.AQUA + "Author: " + ChatColor.WHITE + author);
+        sender.sendMessage(ChatColor.AQUA + "Description: " + ChatColor.WHITE + desc.getDescription());
+        sender.sendMessage(ChatColor.AQUA + "Website: " + ChatColor.WHITE + website);
+
+        sender.sendMessage(LINE_SEPARATOR);
     }
 }

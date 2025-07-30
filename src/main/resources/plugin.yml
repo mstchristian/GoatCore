@@ -10,19 +10,35 @@ description: GoatCore is a sleek, modular framework for high-performance Spigot 
 website: https://github.com/mstchristian/GoatCore
 commands:
   goatcore:
-    description: Displays the GoatCore plugin information.
+    description: Displays the GoatCore plugin information
     usage: /<command>
     permission: goatcore.command
-    permission-message: You do not have permission to use this command.
+    permission-message: You do not have permission to use this command
   serverinfo:
     description: Displays the server information.
     usage: /<command>
     permission: goatcore.serverinfo
-    permission-message: You do not have permission to use this command.
+    permission-message: You do not have permission to use this command
+  setlobby:
+    description: Sets the lobby location for the server.
+    usage: /<command>
+    permission: goatcore.setlobby
+    permission-message: You do not have permission to use this command
+  lobby:
+    description: Teleports the player to the lobby location.
+    usage: /<command>
+    permission: goatcore.lobby
+    permission-message: You do not have permission to use this command
 permissions:
   goatcore.command:
-    description: Allows the use of the /goatcore command.
+    description: Allows the use of the /goatcore command
     default: op
   goatcore.serverinfo:
-    description: Allows the use of the /serverinfo command.
+    description: Allows the use of the /serverinfo command
     default: op
+  goatcore.setlobby:
+    description: Allows the use of the /setlobby command
+    default: op
+  goatcore.lobby:
+    description: Allows the use of the /lobby command
+    default: true
