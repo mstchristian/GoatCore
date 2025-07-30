@@ -8,3 +8,13 @@ prefix: GoatCore
 authors: [mst.christian_]
 description: GoatCore is a sleek, modular framework for high-performance Spigot minigame servers.
 website: https://github.com/mstchristian/GoatCore
+commands:
+  goatcore:
+    description: Displays the GoatCore plugin information.
+    usage: /<command>
+    permission: goatcore.command
+    permission-message: You do not have permission to use this command.
+permissions:
+  goatcore.command:
+    description: Allows the use of the /goatcore command.
+    default: op
