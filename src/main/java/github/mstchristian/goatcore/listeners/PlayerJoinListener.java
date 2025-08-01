@@ -21,7 +21,7 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         var config = plugin.getConfig();
         var player = event.getPlayer();
-        String serverName = config.getString("serverName", "Unknown Server");
+        String serverName = config.getString("serverName");
 
         if (config.getBoolean("lobby.teleportOnJoin")) {
             Location lobbyLocation = config.getLocation("lobby.location");

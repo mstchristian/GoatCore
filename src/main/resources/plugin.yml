@@ -21,7 +21,7 @@ commands:
     permission-message: You do not have permission to use this command
   setlobby:
     description: Sets the lobby location for the server.
-    usage: /<command>
+    usage: /<command> <world> <x> <y> <z> <yaw> <pitch>
     permission: goatcore.setlobby
     permission-message: You do not have permission to use this command
   lobby:

@@ -18,6 +18,7 @@ public final class GoatCore extends JavaPlugin {
     public void onEnable() {
         saveDefaultPluginConfig();
         registerCommands();
+        registerTabCompleters();
         registerEvents();
         logPluginEnabled();
 
@@ -43,6 +44,10 @@ public final class GoatCore extends JavaPlugin {
         getCommand("serverinfo").setExecutor(new ServerInfoCommand(this));
         getCommand("setlobby").setExecutor(new SetLobbyCommand(this));
         getCommand("lobby").setExecutor(new LobbyCommand(this));
+    }
+
+    private void registerTabCompleters() {
+        getCommand("setlobby").setTabCompleter(new SetLobbyCommand(this));
     }
 
     private void registerEvents() {
